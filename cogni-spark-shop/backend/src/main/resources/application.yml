@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: cognicart-backend
+  
+  # Database Configuration
+  datasource:
+    # H2 Database for Development
+    url: jdbc:h2:mem:cognicart
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    
+    # Uncomment below for PostgreSQL Production
+    # url: jdbc:postgresql://localhost:5432/cognicart
+    # driver-class-name: org.postgresql.Driver
+    # username: your_username
+    # password: your_password
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        # For PostgreSQL use: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+  
+  # H2 Console (for development only)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  # File Upload Configuration
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Server Configuration
+server:
+  port: 5454
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# JWT Configuration
+jwt:
+  secret: cognicart-secret-key-change-this-in-production-make-it-at-least-256-bits-long
+  expiration: 86400000 # 24 hours in milliseconds
+  refresh-expiration: 604800000 # 7 days
+
+# Application Configuration
+app:
+  cors:
+    allowed-origins: 
+      - http://localhost:5173
+      - http://localhost:8081
+      - http://localhost:3000
+    allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+    allowed-headers: "*"
+    allow-credentials: true
+  
+  # External API Configuration
+  external:
+    cognicart-api: https://api.cognicart.ai
+    openrouter-api: https://openrouter.ai/api/v1
+
+# Logging
+logging:
+  level:
+    com.cognicart: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
